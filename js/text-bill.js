@@ -3,6 +3,10 @@ let textElement = document.querySelector(".billTypeText");
 //get a reference to the add button
 let addToBillBtnElement = document.querySelector(".addToBillBtn");
 
+let callsTotalElememt = document.querySelector('.callTotalOne');
+let smsTotalElement= document.querySelector('.smsTotalOne');
+let totalCostElement = document.querySelector('.totalOne')
+
 //create a variable that will keep track of the total bill
 var callsTotal = 0;
 var smsTotal = 0;
@@ -17,10 +21,10 @@ function textBillTotal() {
   }
 
   //update the totals that is displayed on the screen.
-  callsTotalElem.innerHTML = callsTotal.toFixed(2);
-  smsTotalElem.innerHTML = smsTotal.toFixed(2);
+  callsTotalElememt.innerHTML = callsTotal.toFixed(2);
+  smsTotalElement.innerHTML = smsTotal.toFixed(2);
   var totalCost = callsTotal + smsTotal;
-  totalCostElem.innerHTML = totalCost.toFixed(2);
+  totalCostElement.innerHTML = totalCost.toFixed(2);
 }
 //add an event listener for when the add button is pressed
 addToBillBtnElement.addEventListener("click", textBillTotal);
