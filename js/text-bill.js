@@ -1,10 +1,29 @@
 // get a reference to the textbox where the bill type is to be entered
-
+let textElement = document.querySelector(".billTypeText");
 //get a reference to the add button
+let addToBillBtnElement = document.querySelector(".addToBillBtn");
 
 //create a variable that will keep track of the total bill
+var callsTotal = 0;
+var smsTotal = 0;
 
+function textBillTotal() {
+  var billTypeEntered = textElement.value.trim();
+  // update the correct total
+  if (billTypeEntered === "call") {
+    callsTotal += 2.75;
+  } else if (billTypeEntered === "sms") {
+    smsTotal += 0.75;
+  }
+
+  //update the totals that is displayed on the screen.
+  callsTotalElem.innerHTML = callsTotal.toFixed(2);
+  smsTotalElem.innerHTML = smsTotal.toFixed(2);
+  var totalCost = callsTotal + smsTotal;
+  totalCostElem.innerHTML = totalCost.toFixed(2);
+}
 //add an event listener for when the add button is pressed
+addToBillBtnElement.addEventListener("click", textBillTotal);
 
 //in the event listener check if the value in the bill type textbox is 'sms' or 'call'
 // * add the appropriate value to the running total
