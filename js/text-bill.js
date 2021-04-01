@@ -3,9 +3,9 @@ let textElement = document.querySelector(".billTypeText");
 //get a reference to the add button
 let addToBillBtnElement = document.querySelector(".addToBillBtn");
 
-let callsTotalElememt = document.querySelector('.callTotalOne');
-let smsTotalElement= document.querySelector('.smsTotalOne');
-let totalCostElement = document.querySelector('.totalOne')
+let callsTotalElememt = document.querySelector(".callTotalOne");
+let smsTotalElement = document.querySelector(".smsTotalOne");
+let totalCostElement = document.querySelector(".totalOne");
 
 //create a variable that will keep track of the total bill
 var callsTotal = 0;
