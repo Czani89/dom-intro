@@ -25,11 +25,27 @@ function calculateBtnClicked() {
       billTotal += 0.75;
     }
   }
-
-  //round to two decimals
+    //round to two decimals
   var roundedBillTotal = billTotal.toFixed(2);
-  billTotalElement.innerHTML = roundedBillTotal;
+    billTotalElement.innerHTML = roundedBillTotal;
+    colours(roundedBillTotal)
+
 }
+  
+ var colours = function(roundedBillTotal) {
+   
+  if(roundedBillTotal >= 30){
+    billTotalElement.classList.add("danger");
+  }
+  else if(roundedBillTotal >= 20){
+    billTotalElement.classList.add("warning");
+  }
+ }
+  
+
+
+
+
 //  * this function should read the string value entered - split it on a comma.
 //  * loop over all the entries in the the resulting list
 //  * check if it is a call or an sms and add the right amount to the overall total

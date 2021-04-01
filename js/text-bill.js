@@ -25,6 +25,14 @@ function textBillTotal() {
   smsTotalElement.innerHTML = smsTotal.toFixed(2);
   var totalCost = callsTotal + smsTotal;
   totalCostElement.innerHTML = totalCost.toFixed(2);
+
+  if (totalCost >= 50){
+    totalCostElement.classList.add("danger");
+  }
+  else if(totalCost >= 30){
+    totalCostElement.classList.add("warning");
+  }
+
 }
 //add an event listener for when the add button is pressed
 addToBillBtnElement.addEventListener("click", textBillTotal);

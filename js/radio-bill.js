@@ -27,6 +27,13 @@ function radioBillTotal() {
   radioSmsTotalElement.innerHTML = radioSmsTotal.toFixed(2);
   var radioTotalCost = radioCallsTotal + radioSmsTotal;
   radioTotalCostElement.innerHTML = radioTotalCost.toFixed(2);
+
+ if(radioTotalCost >= 50){
+  radioTotalCostElement.classList.add("danger");
+ }
+ else if(radioTotalCost >= 30){
+  radioTotalCostElement.classList.add("warning");
+ }
 }
 
 checkedRadioBtn.addEventListener("click", radioBillTotal);
