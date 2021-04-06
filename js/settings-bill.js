@@ -60,13 +60,13 @@ settingsAddBtn.addEventListener("click", function () {
     }
   }
 
-  callTotalSettings.innerHTML = callTotalSettingsOutput;
-  smsTotalSettings.innerHTML = smsTotalSettingsOutput;
+  callTotalSettings.innerHTML = callTotalSettingsOutput.toFixed(2);
+  smsTotalSettings.innerHTML = smsTotalSettingsOutput.toFixed(2);
   // * add the appropriate value to the overall total
   totalSettingsOutput = smsTotalSettingsOutput + callTotalSettingsOutput;
   console.log(totalSettingsOutput);
   // * display the latest total on the screen.
-  totalSettings.innerHTML = totalSettingsOutput;
+  totalSettings.innerHTML = totalSettingsOutput.toFixed(2);
 
   if (totalSettingsOutput >= parseFloat(criticalLevelSetting.value)) {
     totalSettings.classList.add("danger");
