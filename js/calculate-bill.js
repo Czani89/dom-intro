@@ -38,6 +38,7 @@ function calculateBtnClicked() {
     billTotalElement.classList.add("danger");
   }
   else if(roundedBillTotal >= 20){
+    billTotalElement.classList.remove("danger");
     billTotalElement.classList.add("warning");
   }
  }
