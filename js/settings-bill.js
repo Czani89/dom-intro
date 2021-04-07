@@ -5,12 +5,13 @@ let billItemTypeWithSettings = document.querySelector(
 
 // get refences to all the settings fields
 let callCostSetting = document.querySelector(".callCostSetting");
-
 let smsCostSetting = document.querySelector(".smsCostSetting");
-
 let warningLevelSetting = document.querySelector(".warningLevelSetting");
-
 let criticalLevelSetting = document.querySelector(".criticalLevelSetting");
+
+let callTotalSettings = document.querySelector(".callTotalSettings");
+let smsTotalSettings = document.querySelector(".smsTotalSettings");
+let totalSettings = document.querySelector(".totalSettings");
 
 //get a reference to the add button
 let settingsAddBtn = document.querySelector(".settingsAddBtn");
@@ -23,9 +24,6 @@ let warningLevelSettingInput = 0;
 let callCostSettingInput = 0;
 let criticalLevelSettingInput = 0;
 // create a variables that will keep track of all three totals.
-let callTotalSettings = document.querySelector(".callTotalSettings");
-let smsTotalSettings = document.querySelector(".smsTotalSettings");
-let totalSettings = document.querySelector(".totalSettings");
 
 let callTotalSettingsOutput = 0;
 let smsTotalSettingsOutput = 0;
@@ -33,47 +31,53 @@ let totalSettingsOutput = 0;
 
 //add an event listener for when the 'Update settings' button is pressed
 updateSettings.addEventListener("click", function () {
-  smsCostSettingInput = smsCostSetting.value;
-  callCostSettingInput = callCostSetting.value;
-  warningLevelSettingInput = warningLevelSetting.value;
-  criticalLevelSettingInput = criticalLevelSetting.value;
+  smsCostSettingInput = Number(smsCostSetting.value);
+  callCostSettingInput = Number(callCostSetting.value);
+  warningLevelSettingInput = Number(warningLevelSetting.value);
+  criticalLevelSettingInput = Number(criticalLevelSetting.value);
 
-  totalSettings.classList.remove("danger");
-  totalSettings.classList.remove("warning");
+  classes();
 });
 //add an event listener for when the add button is pressed
 
 settingsAddBtn.addEventListener("click", function () {
   //in the event listener get the value from the billItemTypeRadio radio buttons
-
-  const billItemTypeWithSettingsChecked = document.querySelector(
+  const billChecked = document.querySelector(
     "input[name = 'billItemTypeWithSettings']:checked"
   ).value;
-  // * add the appropriate value to the call / sms total
-  if (
-    parseFloat(totalSettings.innerHTML) < parseFloat(criticalLevelSetting.value)
-  ) {
-    if (billItemTypeWithSettingsChecked === "call") {
-      callTotalSettingsOutput += parseFloat(callCostSetting.value);
-    } else if (billItemTypeWithSettingsChecked === "sms") {
-      smsTotalSettingsOutput += parseFloat(smsCostSetting.value);
+
+  if (totalSettingsOutput < criticalLevelSettingInput) {
+    // * add the appropriate value to the call / sms total
+    if (billChecked === "call") {
+      callTotalSettingsOutput += callCostSettingInput;
+    } else if (billChecked === "sms") {
+      smsTotalSettingsOutput += smsCostSettingInput;
     }
+    // console.log(callTotalSettingsOutput);
   }
 
   callTotalSettings.innerHTML = callTotalSettingsOutput.toFixed(2);
   smsTotalSettings.innerHTML = smsTotalSettingsOutput.toFixed(2);
   // * add the appropriate value to the overall total
   totalSettingsOutput = smsTotalSettingsOutput + callTotalSettingsOutput;
-  console.log(totalSettingsOutput);
   // * display the latest total on the screen.
   totalSettings.innerHTML = totalSettingsOutput.toFixed(2);
 
-  if (totalSettingsOutput >= parseFloat(criticalLevelSetting.value)) {
-    totalSettings.classList.add("danger");
-  } else if (totalSettingsOutput >= parseFloat(warningLevelSetting.value)) {
-    totalSettings.classList.add("warning");
-  }
+  classes();
 });
+
+const classes = function () {
+  if (totalSettingsOutput >= criticalLevelSettingInput) {
+    totalSettings.classList.remove("warning");
+    totalSettings.classList.add("danger");
+  } else if (totalSettingsOutput >= warningLevelSettingInput) {
+    totalSettings.classList.remove("danger");
+    totalSettings.classList.add("warning");
+  } else {
+    totalSettings.classList.remove("warning");
+    totalSettings.classList.remove("danger");
+  }
+};
 
 // * add nothing for invalid values that is not 'call' or 'sms'.
 
