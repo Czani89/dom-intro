@@ -67,10 +67,10 @@ settingsAddBtn.addEventListener("click", function () {
 });
 
 const classes = function () {
-  if (totalSettingsOutput >= criticalLevelSettingInput) {
+  if (totalSettingsOutput >= criticalLevelSettingInput && criticalLevelSettingInput > 0) {
     totalSettings.classList.remove("warning");
     totalSettings.classList.add("danger");
-  } else if (totalSettingsOutput >= warningLevelSettingInput) {
+  } else if (totalSettingsOutput >= warningLevelSettingInput && warningLevelSettingInput > 0) {
     totalSettings.classList.remove("danger");
     totalSettings.classList.add("warning");
   } else {
