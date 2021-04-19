@@ -8,32 +8,22 @@ let radioSmsTotalElement = document.querySelector(".smsTotalTwo");
 let radioTotalCostElement = document.querySelector(".totalTwo");
 
 //create a variable that will keep track of the total bill
-let radioCallsTotal = 0;
-let radioSmsTotal = 0;
+let setBill = radioBill();
 //add an event listener for when the add button is pressed
 function radioBillTotal() {
   let radioBillType = document.querySelector(
     "input[name='billItemType']:checked"
-  ).value;
-  // update the correct total
-  if (radioBillType === "call") {
-    radioCallsTotal += 2.75;
-  } else if (radioBillType === "sms") {
-    radioSmsTotal += 0.75;
+  );
+  if (radioBillType) {
+    setBill.setTextCall(radioBillType.value);
   }
-
   //update the totals that is displayed on the screen.
-  radioCallsTotalElememt.innerHTML = radioCallsTotal.toFixed(2);
-  radioSmsTotalElement.innerHTML = radioSmsTotal.toFixed(2);
-  var radioTotalCost = radioCallsTotal + radioSmsTotal;
-  radioTotalCostElement.innerHTML = radioTotalCost.toFixed(2);
+  radioCallsTotalElememt.innerHTML = setBill.radCallsTotal().toFixed(2);
+  radioSmsTotalElement.innerHTML = setBill.radSmsTotal().toFixed(2);
 
- if(radioTotalCost >= 50){
-  radioTotalCostElement.classList.add("danger");
- }
- else if(radioTotalCost >= 30){
-  radioTotalCostElement.classList.add("warning");
- }
+  radioTotalCostElement.innerHTML = setBill.radTotal().toFixed(2);
+
+  radioTotalCostElement.classList.add(setBill.setClass());
 }
 
 checkedRadioBtn.addEventListener("click", radioBillTotal);

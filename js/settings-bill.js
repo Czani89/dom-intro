@@ -1,9 +1,7 @@
-// get a reference to the sms or call radio buttons
 let billItemTypeWithSettings = document.querySelector(
   ".billItemTypeWithSettings"
 );
 
-// get refences to all the settings fields
 let callCostSetting = document.querySelector(".callCostSetting");
 let smsCostSetting = document.querySelector(".smsCostSetting");
 let warningLevelSetting = document.querySelector(".warningLevelSetting");
@@ -13,72 +11,45 @@ let callTotalSettings = document.querySelector(".callTotalSettings");
 let smsTotalSettings = document.querySelector(".smsTotalSettings");
 let totalSettings = document.querySelector(".totalSettings");
 
-//get a reference to the add button
 let settingsAddBtn = document.querySelector(".settingsAddBtn");
 //get a reference to the 'Update settings' button
 let updateSettings = document.querySelector(".updateSettings");
-// create a variables that will keep track of all the settings
 
-let smsCostSettingInput = 0;
-let warningLevelSettingInput = 0;
-let callCostSettingInput = 0;
-let criticalLevelSettingInput = 0;
-// create a variables that will keep track of all three totals.
+//instatiate your instance
+let settingBill = setBilling();
 
-let callTotalSettingsOutput = 0;
-let smsTotalSettingsOutput = 0;
-let totalSettingsOutput = 0;
-
-//add an event listener for when the 'Update settings' button is pressed
 updateSettings.addEventListener("click", function () {
-  smsCostSettingInput = Number(smsCostSetting.value);
-  callCostSettingInput = Number(callCostSetting.value);
-  warningLevelSettingInput = Number(warningLevelSetting.value);
-  criticalLevelSettingInput = Number(criticalLevelSetting.value);
+  settingBill.setCall(Number(callCostSetting.value));
+  settingBill.callSet();
+  settingBill.setSms(Number(smsCostSetting.value));
+  settingBill.smsSet();
+  settingBill.setWarning(Number(warningLevelSetting.value));
+  settingBill.warningSet();
+  settingBill.setCritical(Number(criticalLevelSetting.value));
+  settingBill.criticalSet();
 
-  classes();
+  classed();
 });
-//add an event listener for when the add button is pressed
 
 settingsAddBtn.addEventListener("click", function () {
-  //in the event listener get the value from the billItemTypeRadio radio buttons
   const billChecked = document.querySelector(
     "input[name = 'billItemTypeWithSettings']:checked"
-  ).value;
+  );
 
-  if (totalSettingsOutput < criticalLevelSettingInput) {
-    // * add the appropriate value to the call / sms total
-    if (billChecked === "call") {
-      callTotalSettingsOutput += callCostSettingInput;
-    } else if (billChecked === "sms") {
-      smsTotalSettingsOutput += smsCostSettingInput;
-    }
-    // console.log(callTotalSettingsOutput);
+  if (billChecked) {
+    settingBill.callBillType(billChecked.value);
   }
 
-  callTotalSettings.innerHTML = callTotalSettingsOutput.toFixed(2);
-  smsTotalSettings.innerHTML = smsTotalSettingsOutput.toFixed(2);
-  // * add the appropriate value to the overall total
-  totalSettingsOutput = smsTotalSettingsOutput + callTotalSettingsOutput;
-  // * display the latest total on the screen.
-  totalSettings.innerHTML = totalSettingsOutput.toFixed(2);
+  callTotalSettings.innerHTML = settingBill.callsTotals().toFixed(2);
+  smsTotalSettings.innerHTML = settingBill.smssTotals().toFixed(2);
 
-  classes();
+  totalSettings.innerHTML = settingBill.phoneBillTotal().toFixed(2);
+  classed();
 });
 
-const classes = function () {
-  if (totalSettingsOutput >= criticalLevelSettingInput && criticalLevelSettingInput > 0) {
-    totalSettings.classList.remove("warning");
-    totalSettings.classList.add("danger");
-  } else if (totalSettingsOutput >= warningLevelSettingInput && warningLevelSettingInput > 0) {
-    totalSettings.classList.remove("danger");
-    totalSettings.classList.add("warning");
-  } else {
-    totalSettings.classList.remove("warning");
-    totalSettings.classList.remove("danger");
-  }
-};
-
-// * add nothing for invalid values that is not 'call' or 'sms'.
-
-// * check the value thresholds and display the total value in the right color.
+function classed() {
+  totalSettings.classList.remove("warning");
+  totalSettings.classList.remove("danger");
+  // alert("koko");
+  totalSettings.classList.add(settingBill.warnings());
+}
